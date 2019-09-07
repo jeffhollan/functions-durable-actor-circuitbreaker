@@ -1,0 +1,13 @@
+{
+    "version": "2.0",
+    "extensions": {
+      "durableTask": {
+        "hubName": "debug12",
+        "storageProvider": {
+          "azureStorage": {
+              "connectionStringName": "AzureWebJobsStorage"
+          }
+        }
+      }
+    }
+  }

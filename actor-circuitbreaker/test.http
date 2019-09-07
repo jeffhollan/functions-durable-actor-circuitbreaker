@@ -1,0 +1,15 @@
+# Uses the VS Code Rest Client Extension
+
+### Add failure
+POST http://localhost:7071/runtime/webhooks/durabletask/entities/Circuit/jehollan-circuit-12?op=AddFailure
+Content-Type: application/json
+
+{
+    "RequestId": "fbf2dfca-0e75-4abb-9c88-b7feec723669",
+    "FailureTime": "2019-07-15T00:00:01Z",
+    "InstanceId": "1",
+    "ResourceId": "/subscriptions/411a9cd0-f057-4ae5-8def-cc1ea96a3933/resourceGroups/durable-entity-circuitbreaker/providers/Microsoft.Web/sites/jehollan-circuit-eh"
+}
+
+### Get circuit state
+GET http://localhost:7071/runtime/webhooks/durabletask/entities/Circuit/test

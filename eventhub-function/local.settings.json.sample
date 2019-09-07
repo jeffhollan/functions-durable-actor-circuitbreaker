@@ -1,0 +1,10 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+      "AzureWebJobsStorage": "<storage connection string>",
+      "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+      "CircuitRequestUri": "http://myfunction.azurewebsites.net/runtime/webhooks/durabletask/entities/Circuit",
+      "EventHubConnectionString": "<event hub conneciton string>",
+      "ResourceId": "/subscriptions/411a9cd0-1111-1111-1111-cc1ea96a3933/resourceGroups/myResourceGroup/providers/Microsoft.Web/sites/myEventHubFunction"
+    }
+}

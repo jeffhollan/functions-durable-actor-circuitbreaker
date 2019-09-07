@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "actor-circuitbreaker"
+		},
+		{
+			"name": "eventhub-function",
+			"path": "eventhub-function"
+		},
+		{
+			"path": "eventhub-publisher"
+		},
+		{
+			"path": "circuit-library"
+		}
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen"
+	}
+}

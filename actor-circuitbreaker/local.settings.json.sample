@@ -1,0 +1,9 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+      "AzureWebJobsStorage": "<storage connection string>",
+      "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+      "FailureThreshold": "5",
+      "WindowSize": "00:00:30"
+    }
+}
