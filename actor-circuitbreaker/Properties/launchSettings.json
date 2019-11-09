@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "actor-circuitbreaker": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 7070"
+    }
+  }
+}

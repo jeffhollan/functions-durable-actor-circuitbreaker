@@ -19,16 +19,19 @@ namespace Hollan.Function
         private readonly AsyncRetryPolicy _policy;
         private readonly InstanceId _instance;
         private readonly HttpClient _client;
+
         private static readonly string circuitRequestUri = Environment.GetEnvironmentVariable("CircuitRequestUri");
         private static readonly string resourceId = Environment.GetEnvironmentVariable("ResourceId");
         private static readonly string appName = resourceId.Split('/').Last();
         private static readonly string circuitCode = Environment.GetEnvironmentVariable("CircuitCode");
+        
         public EventHubTrigger(AsyncRetryPolicy policy, InstanceId instance, IHttpClientFactory factory)
         {
             _policy = policy;
             _instance = instance;
-            _client = factory.CreateClient();
+            _client = factory.CreateClient(); 
         }
+
         [FunctionName("EventHubTrigger")]
         public async Task Run([EventHubTrigger("events", Connection = "EventHubConnectionString")] EventData[] events, ILogger log)
         {
@@ -40,16 +43,27 @@ namespace Hollan.Function
             {
                 try
                 {
-                    await _policy.ExecuteAsync(async ctx =>
-                    {
-                        string messageBody = Encoding.UTF8.GetString(eventData.Body.Array, eventData.Body.Offset, eventData.Body.Count);
-                        // Replace these two lines with your processing logic.
-                        log.LogInformation($"C# Event Hub trigger function processed a message: {messageBody}");
-                        var message = JsonConvert.DeserializeObject<dynamic>(messageBody);
-                        if((bool)message["ThrowException"])
-                            throw new Exception("I'm throwing a fit");
-                        await Task.Yield();
-                    }, context);
+                    await _policy.ExecuteAsync(
+                        async ctx =>
+                        {
+                            string messageBody = Encoding.UTF8.GetString(
+                                bytes: eventData.Body.Array,
+                                index: eventData.Body.Offset,
+                                count: eventData.Body.Count);
+
+                            // Replace these two lines with your processing logic.
+                            log.LogInformation($"C# Event Hub trigger function processed a message: {messageBody}");
+                            var message = JsonConvert.DeserializeObject<dynamic>(messageBody);
+
+                            if ((bool) message["ThrowException"])
+                            {
+                                throw new Exception("I'm throwing a fit");
+                            }
+
+                            await Task.Yield();
+
+                        },
+                        context);
 
                 }
                 catch (Exception e)

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Hollan.Function
 {
-    public class CloseCircuitOrchestrator
+    public class OpenCircuitOrchestrator
     {
         
-        [FunctionName(nameof(CloseCircuitOrchestrator.CloseCircuit))]
-        public async Task CloseCircuit(
+        [FunctionName(nameof(OpenCircuit))]
+        public async Task OpenCircuit(
             [OrchestrationTrigger] IDurableOrchestrationContext context,
             ILogger log)
         {
-            if(!context.IsReplaying) log.LogInformation("Disabling function app to close circuit");
+            if(!context.IsReplaying) log.LogInformation("Disabling function app to open circuit");
 
             var resourceId = context.GetInput<string>();
 
@@ -28,8 +28,10 @@ namespace Hollan.Function
                 HttpMethod.Post, 
                 new Uri($"https://management.azure.com{resourceId}/stop?api-version=2016-08-01"),
                 tokenSource: new ManagedIdentityTokenSource("https://management.core.windows.net"));
-            DurableHttpResponse restartResponse = await context.CallHttpAsync(stopFunctionRequest);
-            if (restartResponse.StatusCode != HttpStatusCode.OK)
+            
+             DurableHttpResponse restartResponse = await context.CallHttpAsync(stopFunctionRequest);
+            
+             if (restartResponse.StatusCode != HttpStatusCode.OK)
             {
                 throw new ArgumentException($"Failed to stop Function App: {restartResponse.StatusCode}: {restartResponse.Content}");
             }
