@@ -11,9 +11,12 @@ namespace publisher_net
     class Program
     {
         private static EventHubClient eventHubClient;
+
         static async Task Main(string[] args)
         {
-            
+            // read environment vars from .env file
+            DotNetEnv.Env.Load();
+
             string eventHubConnectionString = System.Environment.GetEnvironmentVariable("EventHubConnectionString");
             string eventHubName = System.Environment.GetEnvironmentVariable("EventHubName");
             var connectionStringBuilder = new EventHubsConnectionStringBuilder(eventHubConnectionString) {
